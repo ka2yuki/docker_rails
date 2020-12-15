@@ -1,4 +1,5 @@
-FROM centos:7
+# FROM centos:7
+FROM ruby:2.5
 
 # rubyとrailsのバージョンを指定
 #ENV ruby_ver="2.6.4"
