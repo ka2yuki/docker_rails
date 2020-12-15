@@ -32,10 +32,10 @@ else
   docker-compose
 fi
 # プロジェクトのビルド
-docker-compose run web rails new . --force --database=postgresql
+docker-compose run web rails new . --force --database=mysql
 # DOCUMENT: https://docs.docker.jp/compose/rails.html
 
-git remote remove origin
+# git remote remove origin
 ls -l
 sudo chown -R $USER:$USER .
 docker-compose build
@@ -61,7 +61,37 @@ docker-compose build
 #   database: myapp_test
 # EOT
 
-docker-compose config # check.
-docker-compose up
+#!/bin/bash
+cat << EOT > config/database.yml
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("MYSQL_USERNAME", "root") %>
+  password: <%= ENV.fetch("MYSQL_PASSWORD", "password") %>
+  host: <%= ENV.fetch("MYSQL_HOST", "db") %>
+
+development:
+  <<: *default
+  database: myapp_development
+
+test:
+  <<: *default
+  database: myapp_test
+
+production:
+  <<: *default
+  database: myapp_production
+  username: myapp
+  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+EOT
+
+
+
+
+# Rails6以降はwebpackのインストールも実行
 docker-compose run web rake db:create
+docker-compose run --rm web rails webpacker:install
+
+docker-compose up
 # docker-machine ip MACHINE_VM
