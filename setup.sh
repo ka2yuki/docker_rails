@@ -18,8 +18,8 @@ else
       ;;
   esac
   docker-machine
-else
-#
+fi
+
 
 if type 'docker-compose' > /dev/null 2>&1; then
   echo "exist docker-compose cmd."
@@ -28,7 +28,7 @@ else
   sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
   sudo chmod +x /usr/local/bin/docker-compose
   docker-compose
-else
+fi
 # プロジェクトのビルド
 docker-compose run web rails new . --force --database=postgresql
 # DOCUMENT: https://docs.docker.jp/compose/rails.html
