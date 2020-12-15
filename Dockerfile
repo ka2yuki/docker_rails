@@ -1,15 +1,17 @@
-FROM centos:7
+# FROM centos:7
+FROM ruby:2.5
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 
 # rubyとrailsのバージョンを指定
 #ENV ruby_ver="2.6.4"
 #ENV rails_ver="5.1.4"
 
 # 必要なパッケージをインストール
-RUN yum -y update
-RUN yum -y install epel-release
-RUN yum -y install git make autoconf curl wget
-RUN yum -y install gcc-c++ glibc-headers openssl-devel readline libyaml-devel readline-devel zlib zlib-devel sqlite-devel bzip2
-RUN yum clean all
+#RUN yum -y update
+#RUN yum -y install epel-release
+#RUN yum -y install git make autoconf curl wget
+#RUN yum -y install gcc-c++ glibc-headers openssl-devel readline libyaml-devel readline-devel zlib zlib-devel sqlite-devel bzip2
+#RUN yum clean all
 
 # rubyとbundleをダウンロード
 #RUN git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
@@ -28,6 +30,7 @@ RUN yum clean all
 ####################
 # offical code add #
 ####################
+RUN mkdir /myapp
 WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
