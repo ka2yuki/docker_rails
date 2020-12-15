@@ -1,3 +1,4 @@
 source 'https://rubygems.org'
-ruby '2.5.8'
 gem 'rails', '~> 6'
+gem 'mysql2'
+gem 'sass-rails'
